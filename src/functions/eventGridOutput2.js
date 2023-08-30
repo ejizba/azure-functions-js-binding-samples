@@ -7,16 +7,18 @@ const eventGridOutput = output.eventGrid({
 
 app.timer('timerTrigger1', {
     schedule: '0 */5 * * * *',
-    extraOutputs: [eventGridOutput],
+    return: eventGridOutput,
     handler: (myTimer, context) => {
         const timeStamp = new Date().toISOString();
-        context.extraOutputs.set(eventGridOutput, [
+        return [
             {
                 id: 'message-id',
                 subject: 'subject-name',
                 dataVersion: '1.0',
                 eventType: 'event-type',
-                data: 'event-data',
+                data: {
+                    name: 'John Henry',
+                },
                 eventTime: timeStamp,
             },
             {
@@ -24,9 +26,11 @@ app.timer('timerTrigger1', {
                 subject: 'subject-name',
                 dataVersion: '1.0',
                 eventType: 'event-type',
-                data: 'event-data',
+                data: {
+                    name: 'John Doe',
+                },
                 eventTime: timeStamp,
             },
-        ]);
+        ];
     },
 });

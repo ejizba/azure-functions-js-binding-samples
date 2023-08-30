@@ -10,9 +10,9 @@ const cosmosOutput = output.cosmosDB({
 app.storageQueue('storageQueueTrigger1', {
     queueName: 'inputqueue',
     connection: 'MyStorageConnectionAppSetting',
-    extraOutputs: [cosmosOutput],
+    return: cosmosOutput,
     handler: (queueItem, context) => {
-        context.extraOutputs.set(cosmosOutput, [
+        return [
             {
                 id: 'John Henry-123456',
                 name: 'John Henry',
@@ -25,6 +25,6 @@ app.storageQueue('storageQueueTrigger1', {
                 employeeId: '123457',
                 address: 'A town far away',
             },
-        ]);
+        ];
     },
 });
